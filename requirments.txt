@@ -1,1 +1,0 @@
-Librerie: Flask, streamlit-extras, fastf1, pandas, matplotlib, plotly, requests, numpy
