@@ -1,15 +1,18 @@
 
 body {
-    background-color: rgb(31, 30, 30);
+    background-color: white;
 }
 
-/* titoli navbar */
+/* navbar */
+.navbar {
+    background-color: #EB0A1E;
+}
 .no-link-style {
-    color:white;
+    color:white !important;
     font-family: 'Orbitron', sans-serif;
 }
 
 .no-link-style:hover {
-    color: white;
+    color: #000000 !important;
 }
   

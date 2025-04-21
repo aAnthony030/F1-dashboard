@@ -46,7 +46,65 @@
         </div>
     </nav>
     <!-- Fine Navbar Bootstrap -->
-    
+
+    <div class="page_gare">
+        <form method="POST">
+
+            <label for="track">Seleziona la pista: </label>
+
+            <select name="track" id="trackSelect">
+                {% for track in tracks %}
+                    <option value="{{ track }}">{{ track }}</option>
+                {% endfor %}
+            </select>
+
+
+            <label for="year">Seleziona l'anno: </label>
+
+            <select name="year" id="yearSelect" disabled>
+                <option value="">-- Scegli prima una pista --</option>
+            </select>
+
+            <button type="submit">Mostra dati</button>
+
+        </form>
+
+        <script>
+            
+            document.getElementById("trackSelect").addEventListener("change", function() {
+                const track = this.value;
+                const yearSelect = document.getElementById("yearSelect");
+        
+                if (!track) {
+                    yearSelect.innerHTML = '<option>-- Scegli prima una pista --</option>';
+                    yearSelect.disabled = true;
+                    return;
+                }
+
+                fetch("/get_years", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ track: track })
+                })
+                .then(response => response.json())
+                .then(years => {
+                    yearSelect.disabled = false;
+                    yearSelect.innerHTML = '<option value="">-- Seleziona un anno --</option>';
+                    years.forEach(year => {
+                        const option = document.createElement("option");
+                        option.value = year;
+                        option.textContent = year;
+                        yearSelect.appendChild(option);
+                    });
+                });
+            });
+
+        </script>
+
+    </div>
+
     <!-- Bootstrap JS (necessario per navbar responsive e componenti dinamici) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-YLONBMeGVuI6jCT1bOQeJ1IXiDhPQIzHoWR0tXbwazUNvF3my/eqn+9Hu6Z8YwnP" crossorigin="anonymous"></script>
 
