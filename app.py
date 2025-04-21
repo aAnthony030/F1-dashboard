@@ -4,7 +4,8 @@ import numpy as np
 import fastf1
 from datetime import datetime
 from pages.gare import *
-
+# https://www.f1monkey.com/f1-data-analysis-with-python-the-basics/
+# https://openf1.org/
 app = Flask(__name__)
 fastf1.Cache.enable_cache('cache')
 
