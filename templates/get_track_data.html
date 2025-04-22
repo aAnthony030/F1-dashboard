@@ -46,33 +46,25 @@
         </div>
     </nav>
     <!-- Fine Navbar Bootstrap -->
+    
+    <h1 class="text-center mt-4">Risultati GP</h1>
 
-    <div class="page_gare">
-        <form method="POST">
-
-            <label for="track">Seleziona la pista: </label>
-
-            <select name="track" id="trackSelect">
-                {% for track in tracks %}
-                    <option value="{{ track }}">{{ track }}</option>
-                {% endfor %}
-            </select>
-
-
-            <label for="year">Seleziona l'anno: </label>
-
-            <select name="year" id="yearSelect" disabled>
-                <option value="">-- Scegli prima una pista --</option>
-            </select>
-
-            <button type="submit" id="mostraDati">Mostra dati</button>
-
-        </form>
-
-        <script src="/static/js/race_selection_year.js"></script>
-
+    <div class="container mt-5">
+        {% if dati %}
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{{ dati["EventName"] }}</h4>
+                    <p><strong>Località:</strong> {{ dati["Location"] }}</p>
+                    <p><strong>Nazione:</strong> {{ dati["Country"] }}</p>
+                    <p><strong>Round:</strong> {{ dati["RoundNumber"] }}</p>
+                </div>
+            </div>
+        {% else %}
+            <div class="alert alert-warning" role="alert">
+                Nessun dato disponibile!
+            </div>
+        {% endif %}
     </div>
-
     <!-- Bootstrap JS (necessario per navbar responsive e componenti dinamici) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-YLONBMeGVuI6jCT1bOQeJ1IXiDhPQIzHoWR0tXbwazUNvF3my/eqn+9Hu6Z8YwnP" crossorigin="anonymous"></script>
 

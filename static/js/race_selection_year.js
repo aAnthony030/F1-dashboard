@@ -1,3 +1,4 @@
+// Primo blocco: aggiorna gli anni quando si seleziona la pista
 document.getElementById("trackSelect").addEventListener("change", function() {
     const track = this.value;
     const yearSelect = document.getElementById("yearSelect");
@@ -25,5 +26,22 @@ document.getElementById("trackSelect").addEventListener("change", function() {
             option.textContent = year;
             yearSelect.appendChild(option);
         });
+        
     });
 });
+
+
+
+// Secondo blocco: invia pista + anno selezionati a Flask per ottenere i dati
+document.getElementById("mostraDati").addEventListener("click", function(e) {
+    e.preventDefault();
+    const track = document.getElementById("trackSelect").value;
+    const year = document.getElementById("yearSelect").value;
+
+    if (!track || !year) {
+        alert("Dati non selezionati");
+        return;
+    }
+
+    window.location.href = `/get_track_data?track=${track}&year=${year}`;a
+    }); 
