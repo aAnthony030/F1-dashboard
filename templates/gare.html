@@ -36,7 +36,7 @@
                         <a class="nav-link no-link-style" href="#">Telemetria</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link no-link-style" href="#">Classifiche</a>
+                        <a class="nav-link no-link-style" href="#">Classifica</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link no-link-style" href="{{ url_for('gare') }}">Gare</a>
@@ -50,19 +50,19 @@
     <div class="page_gare">
         <form method="POST">
 
-            <label for="track">Seleziona la pista: </label>
+            <label for="track">Seleziona un anno: </label>
 
-            <select name="track" id="trackSelect">
-                {% for track in tracks %}
-                    <option value="{{ track }}">{{ track }}</option>
+            <select name="year" id="yearSelect">
+                {% for year in years %}
+                    <option value="{{ year }}">{{ year }}</option>
                 {% endfor %}
             </select>
 
 
-            <label for="year">Seleziona l'anno: </label>
+            <label for="track">Seleziona la pista: </label>
 
-            <select name="year" id="yearSelect" disabled>
-                <option value="">-- Scegli prima una pista --</option>
+            <select name="track" id="trackSelect" disabled>
+                <option value="">-- Scegli prima l'anno --</option>
             </select>
 
             <button type="submit" id="mostraDati">Mostra dati</button>

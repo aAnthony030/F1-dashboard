@@ -17,20 +17,17 @@ def home():
 
 @app.route("/gare", methods=["GET", "POST"])
 def gare():
-    location_list = get_liste_dati()
-    
-    if request.method == "POST":
-        selected_location = request.form.get("track")
-        
-    return render_template("gare.html", tracks=location_list)
+    years = list(range(2018, 2025))
+    return render_template("gare.html", years=years)
 
 
-@app.route("/get_years", methods=["POST"])
+@app.route("/get_tracks", methods=["POST"])
 def get_years():
     data = request.get_json()
-    track = data.get("track")
-    years = get_available_years_for_track(track)
-    return jsonify(years)
+    year = int(data.get("year"))
+    
+    track_list = get_available_track_for_year(year)
+    return jsonify(track_list)
 
 
 @app.route("/get_track_data", methods=["GET"])
@@ -40,7 +37,9 @@ def get_track_data():
 
     year = int(year)
     event = fastf1.get_event(year, track)
-        
+    
+    session_data(year, event.RoundNumber)
+    
     dati = {
         "EventName": event.EventName,
         "Location": event.Location,

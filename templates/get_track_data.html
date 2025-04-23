@@ -36,7 +36,7 @@
                         <a class="nav-link no-link-style" href="#">Telemetria</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link no-link-style" href="#">Classifiche</a>
+                        <a class="nav-link no-link-style" href="#">Classifica</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link no-link-style" href="{{ url_for('gare') }}">Gare</a>
@@ -52,11 +52,16 @@
     <div class="container mt-5">
         {% if dati %}
             <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">{{ dati["EventName"] }}</h4>
-                    <p><strong>Località:</strong> {{ dati["Location"] }}</p>
-                    <p><strong>Nazione:</strong> {{ dati["Country"] }}</p>
-                    <p><strong>Round:</strong> {{ dati["RoundNumber"] }}</p>
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div class="text-content">
+                        <h4 class="card-title">{{ dati["EventName"] }}</h4>
+                        <p><strong>Località:</strong> {{ dati["Location"] }}</p>
+                        <p><strong>Nazione:</strong> {{ dati["Country"] }}</p>
+                        <p><strong>Round:</strong> {{ dati["RoundNumber"] }}</p>
+                    </div>
+                    <div class="image-content ms-3 card">
+                        <img src="static/img/{{ dati["Location"]|lower|replace(' ', '_') }}.svg" alt="{{ dati["Location"] }}" class="img-fluid rounded" style="max-width: 200px;">
+                    </div>
                 </div>
             </div>
         {% else %}
@@ -65,6 +70,7 @@
             </div>
         {% endif %}
     </div>
+    
     <!-- Bootstrap JS (necessario per navbar responsive e componenti dinamici) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-YLONBMeGVuI6jCT1bOQeJ1IXiDhPQIzHoWR0tXbwazUNvF3my/eqn+9Hu6Z8YwnP" crossorigin="anonymous"></script>
 
