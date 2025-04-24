@@ -15,4 +15,22 @@ body {
 .no-link-style:hover {
     color: #000000 !important;
 }
-  
+
+/* fine navbar */
+
+/* freccie get_track_data */
+.arrow {
+    color:rgb(220, 217, 217);
+    border: none;
+}
+
+.arrow:hover{
+    color: black;
+    border: none;
+}
+
+.arrow:active {
+    transform: scale(0.95);
+}
+
+/* fine freccie get_track_data */

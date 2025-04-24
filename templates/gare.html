@@ -53,6 +53,7 @@
             <label for="track">Seleziona un anno: </label>
 
             <select name="year" id="yearSelect">
+                <option value="">-- Scegli l'anno --</option>
                 {% for year in years %}
                     <option value="{{ year }}">{{ year }}</option>
                 {% endfor %}
@@ -63,6 +64,19 @@
 
             <select name="track" id="trackSelect" disabled>
                 <option value="">-- Scegli prima l'anno --</option>
+            </select>
+
+            <label for="session">Seleziona la sessione:</label>
+            
+            <select name="session" id="sessionSelect" disabled>
+                <option value="">-- Scegli prima la pista --</option>
+                <option value="R">Gara</option>
+                <option value="Q">Qualifiche</option>
+                <option value="FP1">Prove Libere 1</option>
+                <option value="FP2">Prove Libere 2</option>
+                <option value="FP3">Prove Libere 3</option>
+                <option value="SQ">Sprint Qualifiche</option>
+                <option value="S">Sprint</option>
             </select>
 
             <button type="submit" id="mostraDati">Mostra dati</button>

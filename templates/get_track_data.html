@@ -52,7 +52,12 @@
     <div class="container mt-5">
         {% if dati %}
             <div class="card">
+                
                 <div class="card-body d-flex justify-content-between align-items-center">
+                    <input type="hidden" id="year" value="{{ dati["Year"] }}">
+                    <input type="hidden" id="track" value="{{ dati["Location"] }}">
+                    <input type="hidden"  id="session" value="{{dati["Session"]}}">
+
                     <div class="text-content">
                         <h4 class="card-title">{{ dati["EventName"] }}</h4>
                         <p><strong>Località:</strong> {{ dati["Location"] }}</p>
@@ -63,6 +68,62 @@
                         <img src="static/img/{{ dati["Location"]|lower|replace(' ', '_') }}.svg" alt="{{ dati["Location"] }}" class="img-fluid rounded" style="max-width: 200px;">
                     </div>
                 </div>
+                
+                <hr>
+
+                <div class="d-flex align-items-center justify-content-center">
+                    <button id="prevSession" type="button" class="btn btn-sm me-2 arrow" style="font-size:50px">&lt;</button>
+                    
+                    {% if session_type == "R" %}
+                        <h3 class="mb-0 text-center">Gara</h4>
+                    {% elif session_type == "Q" %}
+                        <h3 class="mb-0 text-center">Qualifica</h4>
+                    {% elif session_type == "S" %}
+                        <h3 class="mb-0 text-center">Sprint</h4>
+                    {% elif session_type == "SQ" %}
+                        <h3 class="mb-0 text-center">Qualifica Sprint</h4>
+                    {% else %}
+                        <h3 class="mb-0 text-center">{{session_type}}</h4>
+                    {% endif%}
+
+                    <button id="nextSession" type="button" class="btn btn-sm ms-2 arrow" style="font-size:50px">&gt;</button>
+                </div>
+                {% if lista_risultati %}
+                    <table class="table table-borderless">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">N.</th>
+                            <th scope="col">Driver</th>
+                            <th scope="col">Car</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Points</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for r in lista_risultati %}
+                            <tr>
+                            <th scope="row">{{ r.position }}</th>
+                            <td>{{ r.driver_number }}</td>
+                            <td>{{ r.driver_name }}</td>
+                            <td>{{ r.team }}</td>
+
+                            {% if r.time == "" %}
+                                <td>{{ r.status }}</td>
+                            {% else %}
+                                <td>{{ r.time }}</td>
+                            {% endif %}
+                            
+                                <td>{{ r.points }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                <h2 class="alert alert-warning text-center" role="alert">
+                    DATI NON DISPONIBILI
+                </h2>
+                {% endif%}
             </div>
         {% else %}
             <div class="alert alert-warning" role="alert">
@@ -73,6 +134,6 @@
     
     <!-- Bootstrap JS (necessario per navbar responsive e componenti dinamici) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-YLONBMeGVuI6jCT1bOQeJ1IXiDhPQIzHoWR0tXbwazUNvF3my/eqn+9Hu6Z8YwnP" crossorigin="anonymous"></script>
-
+    <script src="static/js/session_selection.js"></script>
 </body>
 </html>

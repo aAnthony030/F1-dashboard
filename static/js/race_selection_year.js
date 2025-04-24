@@ -2,7 +2,7 @@
 document.getElementById("yearSelect").addEventListener("change", function() {
     const year = this.value;
     const trackSelect = document.getElementById("trackSelect");
-        
+    
     if (!year) {
         trackSelect.innerHTML = "<option value=''>-- Scegli prima un anno --</option>";
         trackSelect.disabled = true;
@@ -19,16 +19,17 @@ document.getElementById("yearSelect").addEventListener("change", function() {
     .then(response => response.json())
     .then(tracks => {
         trackSelect.disabled = false;
+
         trackSelect.innerHTML = '<option value="">-- Seleziona una pista --</option>';
-        tracks.forEach(track => {  // 
+        tracks.forEach(track => {
             const option = document.createElement("option");
             option.value = track;
             option.textContent = track;
             trackSelect.appendChild(option);
         });
+    
     })
     .catch(error => {
-        console.error("Errore nel caricamento delle piste:", error);
         alert("Errore nel caricamento delle piste.");
     });
 });
@@ -40,12 +41,26 @@ document.getElementById("mostraDati").addEventListener("click", function(e) {
 
     const track = document.getElementById("trackSelect").value;
     const year = document.getElementById("yearSelect").value;
+    const session = document.getElementById("sessionSelect").value;
 
-    if (!track || !year) {
-        alert("⚠️ Devi selezionare sia anno che pista.");
+    if (!track || !year || !session) {
+        alert("⚠️ Devi selezionare sia pista che anno.");
         return;
     }
 
     // Redirect con i dati come query string
-    window.location.href = `/get_track_data?track=${encodeURIComponent(track)}&year=${encodeURIComponent(year)}`;
+    window.location.href = `/get_track_data?track=${encodeURIComponent(track)}&year=${encodeURIComponent(year)}&session=${encodeURIComponent(session)}`;
 });
+
+
+
+//Dovo che sono stati selezionati anno e pista viene reso selezionale il menù sessione
+document.getElementById("trackSelect").addEventListener("change", function () {
+    const sessionSelect = document.getElementById("sessionSelect");
+    if (this.value) {
+        sessionSelect.disabled = false;
+    } else {
+        sessionSelect.disabled = true;
+    }
+});
+
