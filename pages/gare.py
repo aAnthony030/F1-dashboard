@@ -18,7 +18,13 @@ def get_available_track_for_year(year):
 
 
 def session_data(year, round, session_type, location):
-    session = fastf1.get_session(year, round, session_type)
+    #gestisce i casi in qui una sessione non sia stata disputata o non ci siano dati, in modo da 
+    #mostrare sul browser "dati non disponibili" invece di errori inaspettati
+    try:
+        session = fastf1.get_session(year, round, session_type)
+    except:
+        return None
+    
     session.load()
     results = session.results
     lista_risultati = []
@@ -41,13 +47,19 @@ def session_data(year, round, session_type, location):
                 lista_risultati.append(risultato)
             
             case "Q" | "SQ":
+                
+                try:
+                    time = str(session.laps.pick_drivers(row.Abbreviation).pick_fastest()["LapTime"])[11:19:]
+                except:
+                    time = "//"
+                    
                 risultato = {
                     "position": int(row.Position),
                     "driver_name": row.BroadcastName,
                     "driver_code": row.Abbreviation,   # Codice abbreviato (VER)
                     "driver_number": str(row.DriverNumber),
                     "team": row.TeamName,
-                    "time": str(session.laps.pick_drivers(row.Abbreviation).pick_fastest()["LapTime"])[11:19:],
+                    "time": time,
                     "status": row.Status,
                     "year":year,
                     "location":location,
@@ -55,6 +67,7 @@ def session_data(year, round, session_type, location):
                 lista_risultati.append(risultato)
             
             case "FP1" | "FP2" | "FP3":
+                
                 try:
                     time = float(str(session.laps.pick_drivers(row.Abbreviation).pick_fastest()["LapTime"])[13:21:])
                 except:
@@ -97,7 +110,6 @@ def session_data(year, round, session_type, location):
         #per poter osservare nella classifica i tempi nella maniera corretta
         for i in range(len(lista_tempi_validi)):
             lista_tempi_validi[i]["time"] = "1:" + str(lista_tempi_validi[i]["time"])
-            print(lista_tempi_validi[i]["time"])
         lista_risultati = lista_tempi_validi + lista_tempi_vuoti
         
         #Per visualizzare la classifica piloti, in quanto non viene fornita la posizione

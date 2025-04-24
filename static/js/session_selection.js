@@ -1,26 +1,31 @@
-const sessions = ["FP1", "FP2", "FP3", "Q", "R"]
-let currentSessionIndex = sessions.indexOf("R");
+const sessions = ["FP1", "FP2", "FP3", "SQ", "S", "Q", "R"];
+
+function getCurrentSessionFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const sessionParam = urlParams.get('session');
+    const index = sessions.indexOf(sessionParam);
+    return index !== -1 ? index : sessions.indexOf("R"); // Default to "R" if not found
+}
+
+let currentSessionIndex = getCurrentSessionFromURL();
 
 document.getElementById("prevSession").addEventListener("click", () => {
     if (currentSessionIndex > 0) {
         currentSessionIndex--;
-        updateSession();
+    } else {
+        currentSessionIndex = sessions.length - 1; // Go to last item
     }
-    else {
-        currentSessionIndex = 4;
-    }
+    updateSession();
 });
 
 document.getElementById("nextSession").addEventListener("click", () => {
     if (currentSessionIndex < sessions.length - 1) {
         currentSessionIndex++;
-        updateSession();
+    } else {
+        currentSessionIndex = 0; // Go to first item
     }
-    else {
-        currentSessionIndex = 0;
-    };
+    updateSession();
 });
-
 
 function updateSession() {
     const sessionType = sessions[currentSessionIndex];
@@ -29,4 +34,3 @@ function updateSession() {
 
     window.location.href = `/get_track_data?year=${year}&track=${track}&session=${sessionType}`;
 }
-

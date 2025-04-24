@@ -110,10 +110,12 @@
 
                             {% if r.time == "" %}
                                 <td>{{ r.status }}</td>
+                            {% elif r.position != 1 and r.time != "" and (session_type == "R" or session_type == "S") %}
+                                <td>+{{ r.time[3::] }}</td>
                             {% else %}
                                 <td>{{ r.time }}</td>
                             {% endif %}
-                            
+
                                 <td>{{ r.points }}</td>
                             </tr>
                         {% endfor %}

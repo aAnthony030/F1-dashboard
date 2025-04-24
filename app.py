@@ -39,10 +39,19 @@ def get_track_data():
     session_type = request.args.get("session", "R")  # di default 'R'
     
     year = int(year)
-    event = fastf1.get_event(year, track)
     
-    lista_risultati = session_data(year, event.RoundNumber, session_type, track)
+    #In maniera che se si prova ad aggirare il menù di scelta mettendo dati non non validi
+    #non dia errori inaspettati da "dati non validi"
+    if ((year not in list(range(2018, 2026))) or (track not in get_available_track_for_year(year)) or (session_type not in ["FP1", "FP2", "FP3", "SQ", "S", "Q", "R"])):
+        return render_template("get_track_data.html", dati=None, lista_risultati=None, session_type=None)
     
+    else:
+        event = fastf1.get_event(year, track)
+        lista_risultati = session_data(year, event.RoundNumber, session_type, track)
+    
+    
+
+
     dati = {
         "EventName": event.EventName,
         "Location": event.Location,
