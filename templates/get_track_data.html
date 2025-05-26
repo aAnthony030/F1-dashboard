@@ -65,7 +65,7 @@
                         <p><strong>Round:</strong> {{ dati["RoundNumber"] }}</p>
                     </div>
                     <div class="image-content ms-3 card">
-                        <img src="static/img/{{ dati["Location"]|lower|replace(' ', '_') }}.svg" alt="{{ dati["Location"] }}" class="img-fluid rounded" style="max-width: 200px;">
+                        <img src="static/img/{{ dati["Location"]|lower|replace(' ', '_')|replace('-', '_') }}.svg" alt="{{ dati["Location"] }}" class="img-fluid rounded" style="max-width: 200px;">
                     </div>
                 </div>
                 
@@ -88,7 +88,8 @@
 
                     <button id="nextSession" type="button" class="btn btn-sm ms-2 arrow" style="font-size:50px">&gt;</button>
                 </div>
-                {% if lista_risultati %}
+                {% if lista_risultati and (session_type != "Q" and session_type != "SQ") %}
+
                     <table class="table table-borderless">
                         <thead>
                         <tr>
@@ -97,7 +98,10 @@
                             <th scope="col">Driver</th>
                             <th scope="col">Car</th>
                             <th scope="col">Time</th>
-                            <th scope="col">Points</th>
+
+                            {% if "FP" not in session_type %}
+                                <th scope="col">Points</th>
+                            {% endif %}
                         </tr>
                         </thead>
                         <tbody>
@@ -121,7 +125,52 @@
                         {% endfor %}
                         </tbody>
                     </table>
+                    
+
+                {% elif lista_risultati and (session_type == "Q" or session_type == "SQ") %}
+                    <table class="table table-borderless">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">N.</th>
+                            <th scope="col">Driver</th>
+                            <th scope="col">Car</th>
+                            <th scope="col">Q1</th>
+                            <th scope="col">Q2</th>
+                            <th scope="col">Q3</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for r in lista_risultati %}
+                            <tr>
+                            <th scope="row">{{ r.position }}</th>
+                            <td>{{ r.driver_number }}</td>
+                            <td>{{ r.driver_name }}</td>
+                            <td>{{ r.team }}</td>
+
+                            {% if r.time == "" %}
+                                <td>{{ r.status }}</td>
+                            {% elif r.position != 1 and r.time != "" and (session_type == "R" or session_type == "S") %}
+                                <td>+{{ r.time[3::] }}</td>
+                            {% else %}
+                                <td>{{ r.Q1}}</td>
+                            {% endif %}
+
+                            <td>{{ r.Q2}}</td>
+                            <td>{{ r.Q3}}</td>
+
+                                <td>{{ r.points }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+
                 {% else %}
+                <script src="static/js/session_selection.js">
+                    index += 1;
+                    updateSession();
+                </script>
                 <h2 class="alert alert-warning text-center" role="alert">
                     DATI NON DISPONIBILI
                 </h2>

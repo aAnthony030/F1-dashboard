@@ -13,19 +13,19 @@ def get_available_track_for_year(year):
         
     location_info = schedule["Location"].unique().tolist()
         
-    return location_info
+    return location_info    
 
 
 
 def session_data(year, round, session_type, location):
-    #gestisce i casi in qui una sessione non sia stata disputata o non ci siano dati, in modo da 
-    #mostrare sul browser "dati non disponibili" invece di errori inaspettati
+    # gestisce i casi in cui una sessione non sia stata disputata o non ci siano dati, in modo da 
+    # mostrare sul browser "dati non disponibili" invece di errori inaspettati
     try:
         session = fastf1.get_session(year, round, session_type)
     except:
         return None
     
-    session.load()
+    session.load() 
     results = session.results
     lista_risultati = []
     
@@ -40,18 +40,14 @@ def session_data(year, round, session_type, location):
                     "team": row.TeamName,
                     "time": str(row.Time)[8:19:],
                     "status": row.Status,
-                    "year":year,
-                    "location":location,
+                    "year": year,
+                    "location": location,
                     "points": int(row.Points),
+                    "color":row.TeamColor
                 }
                 lista_risultati.append(risultato)
             
             case "Q" | "SQ":
-                
-                try:
-                    time = str(session.laps.pick_drivers(row.Abbreviation).pick_fastest()["LapTime"])[11:19:]
-                except:
-                    time = "//"
                     
                 risultato = {
                     "position": int(row.Position),
@@ -59,10 +55,13 @@ def session_data(year, round, session_type, location):
                     "driver_code": row.Abbreviation,   # Codice abbreviato (VER)
                     "driver_number": str(row.DriverNumber),
                     "team": row.TeamName,
-                    "time": time,
                     "status": row.Status,
-                    "year":year,
-                    "location":location,
+                    "year": year,
+                    "location": location,
+                    "Q1": str(row.Q1)[11:19:],
+                    "Q2": str(row.Q2)[11:19:],
+                    "Q3": str(row.Q3)[11:19:],
+                    "color": row.TeamColor
                 }
                 lista_risultati.append(risultato)
             
@@ -80,13 +79,14 @@ def session_data(year, round, session_type, location):
                     "team": row.TeamName,
                     "time": time,
                     "status": row.Status,
-                    "year":year,
-                    "location":location
+                    "year": year,
+                    "location": location,
+                    "color": row.TeamColor
                 }
                 lista_risultati.append(risultato)
                 
                 
-    #Solo se è una session free practice in modo da non fare passaggi inutili in più
+    # Solo se è una session free practice in modo da non fare passaggi inutili in più
     if "FP" in session_type:
         lista_tempi_validi = []
         lista_tempi_vuoti = []
@@ -107,12 +107,12 @@ def session_data(year, round, session_type, location):
             
             lista_tempi_validi[i], lista_tempi_validi[min_idx] = lista_tempi_validi[min_idx], lista_tempi_validi[i]
         
-        #per poter osservare nella classifica i tempi nella maniera corretta
+        # per poter osservare nella classifica i tempi nella maniera corretta
         for i in range(len(lista_tempi_validi)):
             lista_tempi_validi[i]["time"] = "1:" + str(lista_tempi_validi[i]["time"])
         lista_risultati = lista_tempi_validi + lista_tempi_vuoti
         
-        #Per visualizzare la classifica piloti, in quanto non viene fornita la posizione
+        # Per visualizzare la classifica piloti, in quanto non viene fornita la posizione
         for i in range(len(lista_risultati)):
             lista_risultati[i]["position"] = i + 1
             
