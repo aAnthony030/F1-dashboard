@@ -1,10 +1,11 @@
+// TODO: rendere dinamica la scelta della sessione
+
 // Primo blocco: aggiorna le piste quando si seleziona l'anno
 document.getElementById("yearSelect").addEventListener("change", function() {
     const year = this.value;
     const trackSelect = document.getElementById("trackSelect");
     
     if (!year) {
-        trackSelect.innerHTML = "<option value=''>-- Scegli prima un anno --</option>";
         trackSelect.disabled = true;
         return;
     }

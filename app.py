@@ -4,8 +4,11 @@ import numpy as np
 import fastf1
 from datetime import datetime
 from pages.gare import *
+from pages.classifica import *
+import requests
 # https://www.f1monkey.com/f1-data-analysis-with-python-the-basics/
 # https://openf1.org/
+# TODO: aggiungere libreria slugify
 app = Flask(__name__)
 fastf1.Cache.enable_cache("cache")
 
@@ -63,6 +66,12 @@ def get_track_data():
         
     return render_template("get_track_data.html", dati=dati, lista_risultati=lista_risultati, session_type=session_type)
 
+
+@app.route("/classifica", methods=["GET"])
+def classifica():
+    classifica_piloti = get_classifica_piloti()
+    classifica_costruttori = get_classifica_costruttori()
+    return render_template("classifica.html", classifica_costruttori=classifica_costruttori, classifica_piloti=classifica_piloti)
 
 
 if __name__ == '__main__':

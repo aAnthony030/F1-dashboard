@@ -36,7 +36,7 @@
                         <a class="nav-link no-link-style" href="#">Telemetria</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link no-link-style" href="#">Classifica</a>
+                        <a class="nav-link no-link-style" href="{{ url_for('classifica') }}">Classifica</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link no-link-style" href="{{ url_for('gare') }}">Gare</a>
@@ -75,15 +75,15 @@
                     <button id="prevSession" type="button" class="btn btn-sm me-2 arrow" style="font-size:50px">&lt;</button>
                     
                     {% if session_type == "R" %}
-                        <h3 class="mb-0 text-center">Gara</h4>
+                        <h3 class="mb-0 text-center">Gara</h3>
                     {% elif session_type == "Q" %}
-                        <h3 class="mb-0 text-center">Qualifica</h4>
+                        <h3 class="mb-0 text-center">Qualifica</h3>
                     {% elif session_type == "S" %}
-                        <h3 class="mb-0 text-center">Sprint</h4>
+                        <h3 class="mb-0 text-center">Sprint</h3>
                     {% elif session_type == "SQ" %}
-                        <h3 class="mb-0 text-center">Qualifica Sprint</h4>
+                        <h3 class="mb-0 text-center">Qualifica Sprint</h3>
                     {% else %}
-                        <h3 class="mb-0 text-center">{{session_type}}</h4>
+                        <h3 class="mb-0 text-center">{{session_type}}</h3>
                     {% endif%}
 
                     <button id="nextSession" type="button" class="btn btn-sm ms-2 arrow" style="font-size:50px">&gt;</button>
@@ -92,53 +92,53 @@
 
                     <table class="table table-borderless">
                         <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">N.</th>
-                            <th scope="col">Driver</th>
-                            <th scope="col">Car</th>
-                            <th scope="col">Time</th>
-
-                            {% if "FP" not in session_type %}
-                                <th scope="col">Points</th>
-                            {% endif %}
-                        </tr>
-                        </thead>
-                        <tbody>
-                            {% for r in lista_risultati %}
                             <tr>
-                            <th scope="row">{{ r.position }}</th>
-                            <td>{{ r.driver_number }}</td>
-                            <td>{{ r.driver_name }}</td>
-                            <td>{{ r.team }}</td>
+                                <th scope="col">#</th>
+                                <th scope="col">N.</th>
+                                <th scope="col">Driver</th>
+                                <th scope="col">Car</th>
+                                <th scope="col">Time</th>
 
-                            {% if r.time == "" %}
-                                <td>{{ r.status }}</td>
-                            {% elif r.position != 1 and r.time != "" and (session_type == "R" or session_type == "S") %}
-                                <td>+{{ r.time[3::] }}</td>
-                            {% else %}
-                                <td>{{ r.time }}</td>
-                            {% endif %}
-
-                                <td>{{ r.points }}</td>
+                                {% if "FP" not in session_type %}
+                                    <th scope="col">Points</th>
+                                {% endif %}
                             </tr>
-                        {% endfor %}
-                        </tbody>
+                        </thead>
+                            <tbody>
+                                {% for r in lista_risultati %}
+                                <tr>
+                                <th scope="row">{{ r.position }}</th>
+                                <td>{{ r.driver_number }}</td>
+                                <td>{{ r.driver_name }}</td>
+                                <td>{{ r.team }}</td>
+
+                                {% if r.time == "" %}
+                                    <td>{{ r.status }}</td>
+                                {% elif r.position != 1 and r.time != "" and (session_type == "R" or session_type == "S") %}
+                                    <td>+{{ r.time[3::] }}</td>
+                                {% else %}
+                                    <td>{{ r.time }}</td>
+                                {% endif %}
+
+                                    <td>{{ r.points }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
                     </table>
                     
 
                 {% elif lista_risultati and (session_type == "Q" or session_type == "SQ") %}
                     <table class="table table-borderless">
                         <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">N.</th>
-                            <th scope="col">Driver</th>
-                            <th scope="col">Car</th>
-                            <th scope="col">Q1</th>
-                            <th scope="col">Q2</th>
-                            <th scope="col">Q3</th>
-                        </tr>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">N.</th>
+                                <th scope="col">Driver</th>
+                                <th scope="col">Car</th>
+                                <th scope="col">Q1</th>
+                                <th scope="col">Q2</th>
+                                <th scope="col">Q3</th>
+                            </tr>
                         </thead>
                         <tbody>
                             {% for r in lista_risultati %}
