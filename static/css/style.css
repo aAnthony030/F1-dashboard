@@ -34,3 +34,16 @@ body {
 }
 
 /* fine freccie get_track_data */
+
+.mini-scroll-box {
+    margin-top: 15px;
+    max-height: 400px;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.scrollable-table {
+  max-height: 300px;
+  overflow-y:scroll;
+}

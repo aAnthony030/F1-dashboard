@@ -16,7 +16,6 @@ def get_classifica_costruttori():
         classifica_finale_costruttori.append(dati)
 
     return classifica_finale_costruttori
-   
 
 
 def get_classifica_piloti():
@@ -37,5 +36,3 @@ def get_classifica_piloti():
         classifica_finale_piloti.append(dati)
     
     return classifica_finale_piloti
-
-print(get_classifica_costruttori())

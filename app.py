@@ -5,6 +5,7 @@ import fastf1
 from datetime import datetime
 from pages.gare import *
 from pages.classifica import *
+from pages.home import *
 import requests
 # https://www.f1monkey.com/f1-data-analysis-with-python-the-basics/
 # https://openf1.org/
@@ -15,7 +16,9 @@ fastf1.Cache.enable_cache("cache")
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    last_race_result, race_name = get_last_result()
+    return render_template("index.html", last_race_result = last_race_result, race_name = race_name)
+
 
 
 @app.route("/gare", methods=["GET", "POST"])
@@ -26,6 +29,7 @@ def gare():
     return render_template("gare.html", years=years, session=sessions)
 
 
+
 @app.route("/get_tracks", methods=["POST"])
 def get_years():
     data = request.get_json()
@@ -33,6 +37,7 @@ def get_years():
     
     track_list = get_available_track_for_year(year)
     return jsonify(track_list)
+
 
 
 @app.route("/get_track_data", methods=["GET"])
@@ -51,9 +56,6 @@ def get_track_data():
     else:
         event = fastf1.get_event(year, track)
         lista_risultati = session_data(year, event.RoundNumber, session_type, track)
-    
-    
-
 
     dati = {
         "EventName": event.EventName,
@@ -65,6 +67,7 @@ def get_track_data():
     }
         
     return render_template("get_track_data.html", dati=dati, lista_risultati=lista_risultati, session_type=session_type)
+
 
 
 @app.route("/classifica", methods=["GET"])

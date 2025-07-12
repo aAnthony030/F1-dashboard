@@ -3,8 +3,6 @@ from fastf1.core import Laps
 import pandas as pd
 
 # TODO: sistemare i duplicati (monte carlo - monaco) (yas marina - yas island) (le castellet- paul riccard)
-# TODO: sistemare problema gestione anni, se nell'url si mettono anni che non sono disponibili in lista,
-# tipo 2017, verranno visualizzati i dati, ma non in maniera corretta
 
 # Ricavo gli anni in cui un GP è stato disputato in modo da non mostrare nella scelta
 # gli anni in cui il GP non è stato disputato
