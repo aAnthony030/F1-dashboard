@@ -55,7 +55,7 @@ document.getElementById("mostraDati").addEventListener("click", function(e) {
 
 
 
-//Dovo che sono stati selezionati anno e pista viene reso selezionale il menù sessione
+//Dopo che sono stati selezionati anno e pista viene reso selezionale il menù sessione
 document.getElementById("trackSelect").addEventListener("change", function () {
     const sessionSelect = document.getElementById("sessionSelect");
     if (this.value) {

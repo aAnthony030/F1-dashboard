@@ -47,53 +47,63 @@
     </nav>
     <!-- Fine Navbar Bootstrap -->
     <!-- Classifica ultima gara -->
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="card mini-scroll-box">
-                    <div class="card-body p-2">
-                        <h6 class="card-title text-center">{{ race_name }}</h6>
-                        <div class="scrollable-table">
-
-                            <table class="table table-sm table-striped mb-0 text-center">
-                            <thead>
-                                <tr>
-                                    <th>N.</th>
-                                    <th>Driver</th>
-                                    <th>Time</th>
-                                </tr>
-                            </thead>
-                            
+    <div class="container mt-4">
+    <div class="row">
+        <!-- Colonna sinistra: Classifica piloti -->
+        <div class="col-md-4">
+        <div class="card mini-scroll-box">
+            <div class="card-body p-2">
+                <h6 class="card-title text-center">Classifica Piloti</h6>
+                <div class="scrollable-table">
+                    <table class="table table-sm table-striped text-center">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Pilota</th>
+                            <th>Punti</th>
+                        </tr>
+                        </thead>
+                        <tbody>
                             {% for i in last_race_result %}
-                            <tbody>
-                                <tr>
-                                    <td>{{ i.position }}</td>
-                                    <td>{{ i.driver_code }}</td>
+                                <tbody>
+                                    <tr>
+                                        <td>{{ i.position }}</td>
+                                        <td>{{ i.driver_code }}</td>
 
-                                    {% if i.position != 1 and i.time != "" %}
-                                    <td>+{{ i.time[3::] }}</td>
-                                    {% elif i.time == "" %}
-                                    <td>{{ i.status }}</td>
-                                    {% else %}
-                                    <td>{{ i.time }}</td>
-                                    {% endif %}
+                                        {% if i.position != 1 and i.time != "" %}
+                                        <td>+{{ i.time[3::] }}</td>
+                                        {% elif i.time == "" %}
+                                        <td>{{ i.status }}</td>
+                                        {% else %}
+                                        <td>{{ i.time }}</td>
+                                        {% endif %}
 
-                                </tr>               
-                            </tbody>
+                                    </tr>               
+                                </tbody>
                             {% endfor %}
-
-                            </table>
-
-                        </div>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+        </div>
+
+        <!-- Colonna destra: Grafico -->
+        <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+            <h6 class="card-title text-center">Posizione per Giro</h6>
+            <div id="grafico-posizioni" style="height: 400px;"></div>
+            </div>
+        </div>
+        </div>
     </div>
-    <!-- Classifica ultima gara -->
-     
+    </div>
+
+
     <!-- Bootstrap JS (necessario per navbar responsive e componenti dinamici) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-YLONBMeGVuI6jCT1bOQeJ1IXiDhPQIzHoWR0tXbwazUNvF3my/eqn+9Hu6Z8YwnP" crossorigin="anonymous"></script>
-
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="static/js/position_change.js"></script>
 </body>
 </html>
